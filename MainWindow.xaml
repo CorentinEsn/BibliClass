@@ -1,0 +1,138 @@
+﻿<Window x:Class="BibliClass.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Bibli'Class" Height="450" Width="800">
+
+    <!--Page-->
+    <DockPanel LastChildFill="True">
+        <!--Side Menu-->
+        <DockPanel Background="LightGray" LastChildFill="False">
+            <!--Search Bar-->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBox Text="Nom du livre/ISBN" Width="120" />
+                <Button Content="Rechercher" />
+            </StackPanel>
+            <!--Tags-->
+            <ItemsControl ItemsSource="{Binding Tags}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="1"
+                                CornerRadius="1"
+                                MouseEnter="HoverAnimation" MouseLeave="endHoverAnimation"
+                                MouseLeftButtonDown="tagClick">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+                            <TextBlock Text="{Binding Name}" />
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!--No Tags-->
+            <Border BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="1"
+                    DockPanel.Dock="Top"
+                    MouseEnter="HoverAnimation" MouseLeave="endHoverAnimation"
+                    MouseLeftButtonDown="tagClick" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Tags.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Border.RenderTransform>
+                <TextBlock Text="Ajouter un tag" />
+            </Border>
+        </DockPanel>
+
+        <!--Book List View-->
+        <WrapPanel>
+            <!--If No Books Found-->
+            <Border x:Name="AddBook"
+                Background="White"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    Height="120" Width="90"
+                    Padding="2" Margin="5"
+                    CornerRadius="3"
+                    MouseEnter="HoverAnimation" MouseLeave="endHoverAnimation"
+                    MouseLeftButtonDown="AddBookTileClick">
+                <Border.Effect>
+                    <DropShadowEffect></DropShadowEffect>
+                </Border.Effect>
+                <!--Assure to stay hidden unless no book is fond-->
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Books.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Border.RenderTransform>
+                <!--Tile-->
+                <StackPanel>
+                    <Image Source="/Assets/plus.png" />
+                    <TextBlock Text="Ajouter un livre" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                </StackPanel>
+            </Border>
+
+            <!--If Yes Books Found-->
+            <ItemsControl ItemsSource="{Binding Books}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" FlowDirection="RightToLeft" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <!--Tile-->
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White"
+                                BorderBrush="Black"
+                                BorderThickness="1"
+                                Height="120" Width="90"
+                                Padding="2" Margin="5"
+                                CornerRadius="3"
+                                MouseEnter="HoverAnimation" MouseLeave="endHoverAnimation"
+                                MouseLeftButtonDown="BookTileClic">
+                            <Border.Effect>
+                                <DropShadowEffect></DropShadowEffect>
+                            </Border.Effect>
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Border.RenderTransform>
+                            <StackPanel>
+                                <TextBlock Text="{Binding IsAvailable}" HorizontalAlignment="Center" />
+                                <Image Source="/Assets/hard-cover-book.png" />
+                                <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" />
+                                <TextBlock Text="{Binding Author}" HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </WrapPanel>
+    </DockPanel>
+</Window>
