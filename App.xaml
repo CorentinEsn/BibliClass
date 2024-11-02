@@ -13,7 +13,7 @@
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
                 From="1" To="0.8" Duration="0:0:0.1" AutoReverse="True" />
         </Storyboard>
-        <!--Hover enter Animation-->
+        <!-- Mouse Hover enter Animation-->
         <Storyboard x:Key="HoverEnterAnimation">
             <DoubleAnimation
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
@@ -22,7 +22,7 @@
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
                 From="1" To="1.2" Duration="0:0:0.1" AutoReverse="False" />
         </Storyboard>
-        <!--Hover leave Animation-->
+        <!--Mouse Hover leave Animation-->
         <Storyboard x:Key="HoverLeaveAnimation">
             <DoubleAnimation
                 Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"

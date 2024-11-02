@@ -81,10 +81,10 @@
                 <!--Assure to stay hidden unless no book is fond-->
                 <Border.Style>
                     <Style TargetType="Border">
-                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Setter Property="Visibility" Value="Visible" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Books.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Visible" />
+                            <DataTrigger Binding="{Binding Books.Count}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

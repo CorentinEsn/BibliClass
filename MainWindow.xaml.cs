@@ -5,23 +5,22 @@ using System.Windows.Media.Animation;
 
 namespace BibliClass
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public LibraryContext context = new LibraryContext();
-        public readonly BookService _bookService;
-        public List<Tag> Tags { get; set; }
-        public List<Book> Books { get; set; }
+        private readonly LibraryContext _context;
+        public List<Book> Books { get; set; } = [];
 
         public MainWindow()
         {
             InitializeComponent();
-            _bookService = new BookService(context);
-            Books = _bookService.ReadAllBooks();
-            Tags = _bookService.ReadAllTags();
-            DataContext = this;
+            _context = new LibraryContext();
+            LoadBooks();
+        }
+
+        private void LoadBooks()
+        {
+            var books = _context.Books.ToList();
+            DataContext = books; // Ou configure un autre DataContext approprié
         }
 
         /*                                      */
@@ -35,10 +34,11 @@ namespace BibliClass
 
         public void AddBookTileClick(object sender, MouseButtonEventArgs e)
         {
-            var addBookWindow = new AddBook(_bookService);
-            addBookWindow.Owner = this;
+            var addBookWindow = new AddBook
+            {
+                Owner = this
+            };
             ClickAnimation(sender, e);
-            Books.Add(new Book { ISBN = "abcd", Title = "Tintin Au Congo" });
             addBookWindow.ShowDialog();
         }
 
