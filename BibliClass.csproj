@@ -9,16 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\camera.png" />
     <None Remove="Assets\hard-cover-book.png" />
+    <None Remove="Assets\plus.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\camera.png" />
     <Resource Include="Assets\hard-cover-book.png" />
+    <Resource Include="Assets\plus.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

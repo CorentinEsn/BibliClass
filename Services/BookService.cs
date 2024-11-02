@@ -9,7 +9,7 @@ public class BookService
         _context = context;
     }
 
-    public void CreateBook(string isbn, string title, string authorFirstName, string authorLastName, List<string> tagNames)
+    public void CreateBook(string isbn, string title, string? authorFirstName, string? authorLastName, List<string>? tagNames)
     {
         var author = new Author
         {
@@ -17,7 +17,9 @@ public class BookService
             LastName = authorLastName
         };
 
-        var tags = tagNames.Select(tagName => new Tag { Name = tagName }).ToList();
+        // Rechercher les tags existants ou les créer si nécessaire
+        var tags = tagNames.Select(tagName =>
+            _context.Tags.FirstOrDefault(t => t.Name == tagName) ?? new Tag { Name = tagName }).ToList();
 
         var book = new Book
         {
@@ -25,6 +27,36 @@ public class BookService
             Title = title,
             Author = author,
             Tags = tags
+        };
+
+        _context.Books.Add(book);
+        _context.SaveChanges();
+    }
+
+    public void CreateBook(string isbn, string title, Author? author, List<string>? tagNames)
+    {
+        // Rechercher les tags existants ou les créer si nécessaire
+        var tags = tagNames.Select(tagName =>
+            _context.Tags.FirstOrDefault(t => t.Name == tagName) ?? new Tag { Name = tagName }).ToList();
+
+        var book = new Book
+        {
+            ISBN = isbn,
+            Title = title,
+            Author = author,
+            Tags = tags
+        };
+
+        _context.Books.Add(book);
+        _context.SaveChanges();
+    }
+
+    internal void CreateBook(string isbn, string title)
+    {
+        var book = new Book
+        {
+            ISBN = isbn,
+            Title = title,
         };
 
         _context.Books.Add(book);
@@ -51,7 +83,10 @@ public class BookService
             book.Title = newTitle;
             book.Author.FirstName = newAuthorFirstName;
             book.Author.LastName = newAuthorLastName;
-            book.Tags = newTagNames.Select(tagName => new Tag { Name = tagName }).ToList();
+
+            // Vérification des tags existants ou création de nouveaux si nécessaire
+            book.Tags = newTagNames.Select(tagName =>
+                _context.Tags.FirstOrDefault(t => t.Name == tagName) ?? new Tag { Name = tagName }).ToList();
 
             _context.SaveChanges();
         }
@@ -74,5 +109,9 @@ public class BookService
             .Include(b => b.Author)
             .Include(b => b.Tags)
             .ToList();
+    }
+    public List<Tag> ReadAllTags()
+    {
+        return _context.Tags.ToList();
     }
 }

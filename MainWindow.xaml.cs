@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BibliClass.Pages;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -9,15 +10,23 @@ namespace BibliClass
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Tag> Tags { get; set; } = new List<Tag>();
-        public List<Book> Books { get; set; } = new List<Book>();
+        public LibraryContext context = new LibraryContext();
+        public readonly BookService _bookService;
+        public List<Tag> Tags { get; set; }
+        public List<Book> Books { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
+            _bookService = new BookService(context);
+            Books = _bookService.ReadAllBooks();
+            Tags = _bookService.ReadAllTags();
             DataContext = this;
         }
 
+        /*                                      */
+        /*          Click Actions               */
+        /*                                      */
         public void tagClick(object sender, MouseButtonEventArgs e)
         {
             Console.WriteLine("Tag clicked !");
@@ -26,9 +35,11 @@ namespace BibliClass
 
         public void AddBookTileClick(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("Add Book !");
+            var addBookWindow = new AddBook(_bookService);
+            addBookWindow.Owner = this;
             ClickAnimation(sender, e);
             Books.Add(new Book { ISBN = "abcd", Title = "Tintin Au Congo" });
+            addBookWindow.ShowDialog();
         }
 
         public void BookTileClic(object sender, MouseButtonEventArgs e)
@@ -38,6 +49,9 @@ namespace BibliClass
             Books.Clear();
         }
 
+        /*                                      */
+        /*          Animation methods           */
+        /*                                      */
         private void ClickAnimation(object sender, MouseButtonEventArgs e)
         {
             // Récupérer le storyboard défini dans les ressources de l'application

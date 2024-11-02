@@ -7,6 +7,7 @@ public class LibraryContext : DbContext
     public DbSet<Loan> Loans { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Person> People { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -15,6 +16,15 @@ public class LibraryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Configuration de la clé primaire pour Book
+        modelBuilder.Entity<Book>()
+            .HasKey(b => b.ISBN);
+
+        // Configuration de la clé primaire pour Tag
+        modelBuilder.Entity<Tag>()
+            .HasKey(b => b.Name);
+
+
         // Configure TPH pour Person, Student, et Author
         modelBuilder.Entity<Person>()
             .HasDiscriminator<string>("PersonType")
@@ -23,7 +33,7 @@ public class LibraryContext : DbContext
 
         // Configuration de la clé composite pour Loan
         modelBuilder.Entity<Loan>()
-            .HasKey(l => new { l.LoanerId, l.BookId });
+            .HasKey(l => new { l.LoanerId, l.BookISBN });
 
         // Relations entre Loan, Person et Book
         modelBuilder.Entity<Loan>()
@@ -34,7 +44,7 @@ public class LibraryContext : DbContext
         modelBuilder.Entity<Loan>()
             .HasOne(l => l.Book)
             .WithMany(b => b.Loans)
-            .HasForeignKey(l => l.BookId);
+            .HasForeignKey(l => l.BookISBN);
 
         // Relation entre Book et Author
         modelBuilder.Entity<Book>()
