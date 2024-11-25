@@ -8,7 +8,7 @@ namespace BibliClass
     public partial class MainWindow : Window
     {
         private readonly LibraryContext _context;
-        public List<Book> Books { get; set; } = [];
+        //public List<Book> Books { get; set; } = [];
 
         public MainWindow()
         {
@@ -46,7 +46,7 @@ namespace BibliClass
         {
             Console.WriteLine("Book clicked !");
             ClickAnimation(sender, e);
-            Books.Clear();
+            //Books.Clear();
         }
 
         /*                                      */
