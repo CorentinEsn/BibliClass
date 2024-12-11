@@ -15,21 +15,19 @@
         </Storyboard>
         <!-- Mouse Hover enter Animation-->
         <Storyboard x:Key="HoverEnterAnimation">
-            <DoubleAnimation
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                From="1" To="1.2" Duration="0:0:0.1" AutoReverse="False" />
-            <DoubleAnimation
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                From="1" To="1.2" Duration="0:0:0.1" AutoReverse="False" />
+            <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                To="Blue"/>
+            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                    To="3" Duration="0:0:0.1"/>
+
         </Storyboard>
         <!--Mouse Hover leave Animation-->
         <Storyboard x:Key="HoverLeaveAnimation">
-            <DoubleAnimation
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                From="1.2" To="1" Duration="0:0:0.1" AutoReverse="False" />
-            <DoubleAnimation
-                Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                From="1.2" To="1" Duration="0:0:0.1" AutoReverse="False" />
+            <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                                To="Black"/>
+            <ThicknessAnimation Storyboard.TargetProperty="BorderThickness"
+                                                    To="1" Duration="0:0:0.1"/>
+
         </Storyboard>
     </Application.Resources>
 </Application>

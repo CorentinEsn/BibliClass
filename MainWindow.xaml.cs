@@ -1,4 +1,5 @@
 ﻿using BibliClass.Pages;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
@@ -8,19 +9,28 @@ namespace BibliClass
     public partial class MainWindow : Window
     {
         private readonly LibraryContext _context;
-        //public List<Book> Books { get; set; } = [];
+        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; }
+        public ObservableCollection<Author> Authors { get; set; }
+
 
         public MainWindow()
         {
             InitializeComponent();
             _context = new LibraryContext();
-            LoadBooks();
-        }
 
-        private void LoadBooks()
-        {
-            var books = _context.Books.ToList();
-            DataContext = books; // Ou configure un autre DataContext approprié
+            Books = (ObservableCollection<Book>)[.. _context.Books];
+            Tags = (ObservableCollection<Tag>)[.. _context.Tags];
+            Authors = (ObservableCollection<Author>)[.. _context.Authors];
+
+            bookListDisplay.ItemsSource = Books;
+            tagsDisplay.ItemsSource = Tags;
+
+            /*if (Books.Count() > 0)
+            {
+                AddBook.Visibility = Visibility.Collapsed;
+            }*/
+
         }
 
         /*                                      */
@@ -34,12 +44,17 @@ namespace BibliClass
 
         public void AddBookTileClick(object sender, MouseButtonEventArgs e)
         {
-            var addBookWindow = new AddBook
+            var addBookWindow = new AddBook(this._context)
             {
                 Owner = this
             };
             ClickAnimation(sender, e);
-            addBookWindow.ShowDialog();
+            if (addBookWindow.ShowDialog() == true)
+            {
+                Book bookToAdd = addBookWindow.Answer;
+                this._context.AddBook(bookToAdd);
+                this.Books.Add(bookToAdd);
+            }
         }
 
         public void BookTileClic(object sender, MouseButtonEventArgs e)

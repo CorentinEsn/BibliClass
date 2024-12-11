@@ -23,7 +23,7 @@
             </Border>
             <StackPanel Margin="5" Width="200" VerticalAlignment="Center" >
                 <Grid>
-                <TextBox x:Name="Titre" />
+                <TextBox x:Name="Titre"/>
                 <TextBlock IsHitTestVisible="False" Text="Titre" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -55,12 +55,12 @@
                 <ComboBox IsEditable="True" IsReadOnly="False" Text="Auteur" x:Name="Auteur">
                     <ComboBoxItem>Get auteur</ComboBoxItem>
                 </ComboBox>
-                <ComboBox IsEditable="True" IsReadOnly="False" Text="Tags" x:Name="Tags">
+                <ComboBox IsEditable="True" IsReadOnly="True" Text="Tags" x:Name="Tags">
                     <ComboBoxItem>Get Tabs</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
         </WrapPanel>
-        <Button Content="Valider" Height="20" Width="200" Click="validateForm"/>
-        <Button Content="Annuler" Height="20" Width="200" Click="closeWindow"/>
+        <Button IsDefault="True" Content="Valider" Height="20" Width="200" Click="validateForm"/>
+        <Button IsCancel="True" Content="Annuler" Height="20" Width="200"/>
     </StackPanel>
 </Window>
