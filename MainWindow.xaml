@@ -13,7 +13,7 @@
             <!--Search Bar-->
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,3">
                 <Grid Width="120">
-                    <TextBox x:Name="SearchBox" />
+                    <TextBox x:Name="SearchBox" TextChanged="searchTextChange"/>
                     <TextBlock IsHitTestVisible="False" Text="Auteur/Titre" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">

@@ -1,6 +1,7 @@
 ﻿using BibliClass.Pages;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -42,6 +43,11 @@ namespace BibliClass
             ClickAnimation(sender, e);
         }
 
+        /// <summary>
+        /// Open the Add Book popup form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void AddBookTileClick(object sender, MouseButtonEventArgs e)
         {
             var addBookWindow = new AddBook(this._context)
@@ -57,11 +63,48 @@ namespace BibliClass
             }
         }
 
+        /// <summary>
+        /// Method to call when a book tile is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void BookTileClic(object sender, MouseButtonEventArgs e)
         {
             Console.WriteLine("Book clicked !");
             ClickAnimation(sender, e);
-            //Books.Clear();
+        }
+
+        public void searchTextChange(object sender, TextChangedEventArgs e)
+        {
+            ObservableCollection<Book> FilteredBooks = new ObservableCollection<Book>();
+            ObservableCollection<Book> initialBooks = new ObservableCollection<Book>();
+            string searchText = SearchBox.Text.ToLower();
+            //If nothing is written, the book collection is reseted
+            if (searchText == "")
+            {
+                Books.Clear();
+                initialBooks = (ObservableCollection<Book>)[.. _context.Books];
+                foreach (var book in initialBooks)
+                {
+                    Books.Add(book);
+                }
+            }
+            else
+            {
+                foreach (var book in Books)
+                {
+                    //If searchText is contained in the Authors nam or in the books title
+                    if (book.Title.ToLower().Contains(searchText) || book.Author.Name.ToLower().Contains(searchText))
+                    {
+                        FilteredBooks.Add(book);
+                    }
+                }
+                Books.Clear();
+                foreach (var book in FilteredBooks)
+                {
+                    Books.Add(book);
+                }
+            }
         }
 
         /*                                      */
