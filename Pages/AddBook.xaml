@@ -23,8 +23,8 @@
             </Border>
             <StackPanel Margin="5" Width="200" VerticalAlignment="Center" >
                 <Grid>
-                <TextBox x:Name="Titre"/>
-                <TextBlock IsHitTestVisible="False" Text="Titre" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">
+                    <TextBox x:Name="Titre"/>
+                    <TextBlock IsHitTestVisible="False" Text="Titre" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -52,12 +52,47 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                <ComboBox IsEditable="True" IsReadOnly="False" Text="Auteur" x:Name="Auteur">
-                    <ComboBoxItem>Get auteur</ComboBoxItem>
-                </ComboBox>
-                <ComboBox IsEditable="True" IsReadOnly="True" Text="Tags" x:Name="Tags">
-                    <ComboBoxItem>Get Tabs</ComboBoxItem>
-                </ComboBox>
+                <Grid>
+                    <ComboBox 
+                    IsEditable="True" 
+                    IsReadOnly="False" 
+                    x:Name="Auteurs" 
+                    DisplayMemberPath="Name" 
+                    SelectedValuePath="Name"/>
+                    <TextBlock IsHitTestVisible="False" Text="Auteur" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">                        
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Auteurs,Path=SelectedItem}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <Grid>
+                <ComboBox                     
+                    IsEditable="False" 
+                    Text="Genre" 
+                    x:Name="Tags" 
+                    DisplayMemberPath="tag" 
+                    SelectedValuePath="tag"/>
+                    <TextBlock IsHitTestVisible="False" Text="Genre" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,0,0,0" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Tags,Path=SelectedItem}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                </Grid>
             </StackPanel>
         </WrapPanel>
         <Button IsDefault="True" Content="Valider" Height="20" Width="200" Click="validateForm"/>
